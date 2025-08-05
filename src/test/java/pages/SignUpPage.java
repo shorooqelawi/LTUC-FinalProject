@@ -23,8 +23,8 @@ public class SignUpPage {
     By password = By.id("password");
     By submitBtn = By.xpath("//button[@type='submit']");
 
-    // هاد ميثود يعبي الفورم
-    public void fillForm(String fName, String lName, String date, String str, String zip, String ct, String st, String cntry, String phn, String em, String pwd) {
+    public void fillForm(String fName, String lName, String date, String str, String zip, String ct,
+                         String st, String cntry, String phn, String em, String pwd) {
         driver.findElement(firstName).sendKeys(fName);
         driver.findElement(lastName).sendKeys(lName);
         driver.findElement(dob).sendKeys(date);
