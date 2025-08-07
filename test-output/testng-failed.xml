@@ -6,7 +6,7 @@
       <class name="tests.TestCases">
         <methods>
           <include name="MySetUp"/>
-          <include name="testFilters"/>
+          <include name="tsearchTest"/>
         </methods>
       </class> <!-- tests.TestCases -->
     </classes>

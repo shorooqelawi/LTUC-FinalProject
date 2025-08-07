@@ -1,5 +1,6 @@
 package tests;
 
+import utils.CommonUtils;
 import utils.DBUtils;
 import pages.DetailsPage;
 import pages.HomePage;
@@ -58,7 +59,7 @@ public class TestCases {
     }
     
 
-    @Test(priority = 1,enabled=false)
+    @Test(priority = 1,enabled=true)
     public void SignUpPage() throws InterruptedException, SQLException {
         Thread.sleep(1000);
         driver.navigate().to("https://practicesoftwaretesting.com/auth/register");
@@ -121,7 +122,7 @@ public class TestCases {
     }
     
     
-    @Test(priority = 2,enabled=false)
+    @Test(priority = 2,enabled=true)
     public void loginWithRegisteredValidData() throws InterruptedException {
     	Thread.sleep(1000);
         LoginPage login = new LoginPage(driver);
@@ -155,7 +156,7 @@ public class TestCases {
     }
     
     
-	@Test(priority = 3,enabled = false)
+	@Test(priority = 3,enabled = true)
 	public void logOutTest() throws InterruptedException {
 	    Thread.sleep(2000);
 
@@ -173,8 +174,7 @@ public class TestCases {
 	//DANA
 	
 	
-	
-	@Test(enabled = true)
+	@Test(enabled = false)
     public  void tsearchTest() throws InterruptedException {
 		HomePage homePage = new HomePage(driver);
 		String actual,expected;
@@ -182,7 +182,7 @@ public class TestCases {
 		
 		homePage.searchByName(expected);
 		
-		Thread.sleep(1000);   
+		Thread.sleep(3000);   
 		
 		homePage.getItemsNames();
 		
@@ -200,7 +200,7 @@ public class TestCases {
 
 		  }
 	
-	@Test(enabled = false)
+	@Test(enabled = false)//t
 	public void testSlider() throws InterruptedException
 
 	{	HomePage homePage = new HomePage(driver);
@@ -224,6 +224,7 @@ public class TestCases {
 
 		Assert.assertTrue(actual >= min && actual <= max,
 		    "Expected value to be between " + min + " and " + max + ", but got: " + actual);
+		CommonUtils.flushList(Data.getItemsPrices());
 
 	}}
 	else {
@@ -234,6 +235,7 @@ public class TestCases {
 
 			Assert.assertTrue(actual >= max && actual <= min,
 			    "Expected value to be between " + max + " and " + min + ", but got: " + actual);
+			CommonUtils.flushList(Data.getItemsPrices());
 
 		}
 	}
@@ -244,16 +246,17 @@ public class TestCases {
 		
 	}
 	
-	@Test(enabled = false)//f
+	@Test(enabled = false)
 	public void testFilters() throws InterruptedException
-	{	Thread.sleep(1000);
+	{
 		HomePage homePage = new HomePage(driver);
 		DetailsPage detailsPage=new DetailsPage(driver);
 		homePage.chooseFillters();
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 		homePage.clickOnItems();
 
 		detailsPage.getCategory();
+		Thread.sleep(1000);
 		boolean found = false;
 
 		for (int i = 0; i < Data.getChoosenFilltersNames().size(); i++) {
@@ -265,7 +268,7 @@ public class TestCases {
 System.out.print("List ="+Data.getChoosenFilltersNames()+"real="+Data.getCategory());
 		Assert.assertTrue(found, "Expected filter containing '" + Data.getCategory() + "' was not found in the list: " + Data.getChoosenFilltersNames());
 
-		
+		CommonUtils.flushList(Data.getChoosenFilltersNames());
 	}
 	
 	@Test(enabled = false)
@@ -283,27 +286,28 @@ System.out.print("List ="+Data.getChoosenFilltersNames()+"real="+Data.getCategor
 		
 	}
 	
-	@Test(enabled = false)//F
-	public void testLinks()
-	{
-		HomePage homePage=new HomePage(driver);
-		String[] keyStrings= {"GitHub"," Support","Privacy"," BarnImages"," Unsplash"};
-		homePage.hyperLinkes();
-		String res="";
-		boolean found = false;
-
-		for (int i = 0; i < keyStrings.length; i++) {
-		    if (Data.getLinks().toLowerCase().contains(keyStrings[i].toLowerCase())) {
-		        found = true;
-		        res=keyStrings[i];
-		        break;
-		    }
-		}
-		System.out.print("List ="+Data.getLinks()+"real="+res);
-		Assert.assertTrue(found, "Expected URL containing '" + Data.getLinks() + "' was not found in the list: " + res);
-
-
-		}
-    
+	@Test(enabled = false)
+	public void testLinks() {
+	    HomePage homePage = new HomePage(driver);
+	    String[] keyStrings = {"GitHub", "Support", "Privacy", "BarnImages", "Unsplash"};
+ 
+	    homePage.hyperLinkes();   
+ 
+	    String link = Data.getLinks(); 
+	    String matchedKeyword = "";
+	    boolean found = false;
+ 
+	    for (String keyword : keyStrings) {
+	        if (link.toLowerCase().contains(keyword.toLowerCase())) {
+	            found = true;
+	            matchedKeyword = keyword;
+	            break;
+	        }
+	    }
+ 
+	    System.out.println("Link = " + link + " | Matched Keyword = " + matchedKeyword);
+	    Assert.assertTrue(found, "Expected URL containing one of the keywords was not found. Actual URL: " + link);
+	}
+ 
 }
 

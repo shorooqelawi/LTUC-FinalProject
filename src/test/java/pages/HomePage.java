@@ -1,6 +1,7 @@
 package pages;
 import utils.*;
-import data.Data;
+import data.*;
+
 import java.util.List;
 import java.util.Set;
 
@@ -31,9 +32,12 @@ public class HomePage {
     By minSlider = By.className("ngx-slider-pointer-min");
     By minValue = By.className("ngx-slider-model-value");
     By maxValue = By.className("ngx-slider-model-high");
+    
+    By filter=By.cssSelector("label > input[type='checkbox']");
+   
 
     By byBrandFillter = By.xpath("//*[@id=\"filters\"]/fieldset[2]");
-    By brands = By.xpath("//*[@id=\"filters\"]/fieldset[2]/div[1]/label");
+    By brands = By.cssSelector("label > input[type='checkbox']");
 
 
     By footer = By.className("container-fluid");
@@ -92,14 +96,16 @@ public class HomePage {
             Data.setItemsPrices(Integer.parseInt(prices.get(m).getText().replace("$", "")));
         }
     }
-
+    
+    
     public void chooseFillters() {
-        List<WebElement> fillters = filltersContainer.findElements(By.className("checkbox"));
-
+        List<WebElement> fillters = filltersContainer.findElements(filter);
         int rand = CommonUtils.random(fillters.size());
 
+        // نكبس على الفلتر العشوائي
         fillters.get(rand).click();
 
+        // إذا كان الفلتر فيه سب فلترز
         if (rand == 0 || rand == 8 || rand == 13) {
             int i = 0;
             switch (rand) {
@@ -114,21 +120,43 @@ public class HomePage {
                 3
             );
 
-            
-            List<WebElement> allChoicEs = subFilters.findElements(By.xpath("//label[input[@type='checkbox']]"));
+            List<WebElement> allChoicEs = subFilters.findElements(filter);
 
             for (int m = 1; m < allChoicEs.size(); m++) {
-                Data.setChoosenFilltersNames(allChoicEs.get(m).getText());
+                WebElement input = allChoicEs.get(m);
+                WebElement label = input.findElement(By.xpath("ancestor::label"));
+                Data.setChoosenFilltersNames(label.getText().trim());
             }
+
         } else {
-            Data.setChoosenFilltersNames(fillters.get(rand).getText());
+            WebElement input = fillters.get(rand);
+            WebElement label = input.findElement(By.xpath("ancestor::label"));
+            Data.setChoosenFilltersNames(label.getText().trim());
         }
     }
+
+    
+    
+    
+    
     public void byBrand() {
         WebElement byBrandContainer = allFiltersContainer.findElement(byBrandFillter);
-        List<WebElement> byBrandElement = byBrandContainer.findElements(brands);
-     
-        Data.setChoosenBrand(byBrandElement.get(CommonUtils.random(byBrandElement.size())).getText());}
+        List<WebElement> byBrandElement = byBrandContainer.findElements(brands); // هاد بيجيب <input> العناصر
+
+        int rand = CommonUtils.random(byBrandElement.size());
+
+        WebElement selectedInput = byBrandElement.get(rand);
+
+        // جلب الليبل الأب لعُنصر الـ input
+        WebElement label = selectedInput.findElement(By.xpath("ancestor::label"));
+
+        // أخذ النص من الليبل بدل الـ input
+        Data.setChoosenBrand(label.getText().trim());
+
+        // ضغط على العنصر المختار
+        selectedInput.click();
+    }
+
 
     public void clickOnItems() {
         cardsContainer = CommonUtils.waitForVisibility(driver, itemsContainer, 3);
