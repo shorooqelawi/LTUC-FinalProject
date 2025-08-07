@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="2" total="5" passed="3" failed="0" skipped="0">
+<testng-results ignored="9" total="10" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-08-05T16:25:03 GMT+03:00" name="Default suite" finished-at="2025-08-05T16:25:21 GMT+03:00" duration-ms="18856">
+  <suite started-at="2025-08-07T12:07:03 GMT+03:00" name="Default suite" finished-at="2025-08-07T12:07:06 GMT+03:00" duration-ms="3021">
     <groups>
     </groups>
-    <test started-at="2025-08-05T16:25:03 GMT+03:00" name="Default test" finished-at="2025-08-05T16:25:21 GMT+03:00" duration-ms="18856">
+    <test started-at="2025-08-07T12:07:03 GMT+03:00" name="Default test" finished-at="2025-08-07T12:07:06 GMT+03:00" duration-ms="3021">
       <class name="tests.TestCases">
-        <test-method is-config="true" signature="MySetUp()[pri:0, instance:tests.TestCases@7103cb56]" started-at="2025-08-05T16:25:03 GMT+03:00" name="MySetUp" finished-at="2025-08-05T16:25:04 GMT+03:00" duration-ms="1713" status="PASS">
+        <test-method is-config="true" signature="MySetUp()[pri:0, instance:tests.TestCases@4fce136b]" started-at="2025-08-07T12:07:03 GMT+03:00" name="MySetUp" finished-at="2025-08-07T12:07:05 GMT+03:00" duration-ms="1590" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MySetUp -->
-        <test-method signature="SignUpPage()[pri:1, instance:tests.TestCases@7103cb56]" started-at="2025-08-05T16:25:04 GMT+03:00" name="SignUpPage" finished-at="2025-08-05T16:25:09 GMT+03:00" duration-ms="4764" status="PASS">
+        <test-method signature="tsearchTest()[pri:0, instance:tests.TestCases@4fce136b]" started-at="2025-08-07T12:07:05 GMT+03:00" name="tsearchTest" finished-at="2025-08-07T12:07:06 GMT+03:00" duration-ms="1387" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- SignUpPage -->
-        <test-method signature="loginWithRegisteredValidData()[pri:2, instance:tests.TestCases@7103cb56]" started-at="2025-08-05T16:25:09 GMT+03:00" name="loginWithRegisteredValidData" finished-at="2025-08-05T16:25:15 GMT+03:00" duration-ms="5517" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- loginWithRegisteredValidData -->
-        <test-method signature="logOutTest()[pri:3, instance:tests.TestCases@7103cb56]" started-at="2025-08-05T16:25:15 GMT+03:00" name="logOutTest" finished-at="2025-08-05T16:25:21 GMT+03:00" duration-ms="6774" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- logOutTest -->
+        </test-method> <!-- tsearchTest -->
       </class> <!-- tests.TestCases -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

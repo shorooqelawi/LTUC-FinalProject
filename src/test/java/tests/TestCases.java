@@ -1,6 +1,8 @@
 package tests;
 
 import utils.DBUtils;
+import pages.DetailsPage;
+import pages.HomePage;
 import pages.LogOut;
 import pages.LoginPage;
 import pages.SignUpPage;
@@ -17,6 +19,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import data.Data;
 
 public class TestCases {
 
@@ -54,7 +58,7 @@ public class TestCases {
     }
     
 
-    @Test(priority = 1,enabled=true)
+    @Test(priority = 1,enabled=false)
     public void SignUpPage() throws InterruptedException, SQLException {
         Thread.sleep(1000);
         driver.navigate().to("https://practicesoftwaretesting.com/auth/register");
@@ -117,7 +121,7 @@ public class TestCases {
     }
     
     
-    @Test(priority = 2,enabled=true)
+    @Test(priority = 2,enabled=false)
     public void loginWithRegisteredValidData() throws InterruptedException {
     	Thread.sleep(1000);
         LoginPage login = new LoginPage(driver);
@@ -151,7 +155,7 @@ public class TestCases {
     }
     
     
-	@Test(priority = 3,enabled = true)
+	@Test(priority = 3,enabled = false)
 	public void logOutTest() throws InterruptedException {
 	    Thread.sleep(2000);
 
@@ -166,6 +170,140 @@ public class TestCases {
 	}
 
     
+	//DANA
+	
+	
+	
+	@Test(enabled = true)
+    public  void tsearchTest() throws InterruptedException {
+		HomePage homePage = new HomePage(driver);
+		String actual,expected;
+		expected=Data.getTooles();
+		
+		homePage.searchByName(expected);
+		
+		Thread.sleep(1000);   
+		
+		homePage.getItemsNames();
+		
+		
+		
+		
+		actual=Data.getCategory();
+		
+		System.out.println("Expected: " + expected);
+		System.out.println("Actual: " + actual);
+
+		Assert.assertTrue(actual.toLowerCase().contains(expected.toLowerCase()), 
+			    "Expected value (ignoring case) to be in actual. Actual: " + actual + ", Expected: " + expected);
+
+
+		  }
+	
+	@Test(enabled = false)
+	public void testSlider() throws InterruptedException
+
+	{	HomePage homePage = new HomePage(driver);
+		
+		
+		homePage.minSlider();
+		Thread.sleep(2000);
+		homePage.maxSlider();
+		System.out.println("num1="+Data.getMinValue()+" "+"num2"+Data.getMaxValue());
+
+		int min=Data.getMinValue();
+		int max=Data.getMaxValue();
+		int actual;
+	int count = Math.min(Data.getItemsPrices().size(), 3); // لو في أقل من 2، ما بصير error
+	if(min<max)
+		
+	{for(int i=0;i<count;i++)
+	{
+	
+	actual=Data.getItemsPrices().get(i);
+
+		Assert.assertTrue(actual >= min && actual <= max,
+		    "Expected value to be between " + min + " and " + max + ", but got: " + actual);
+
+	}}
+	else {
+		for(int i=0;i<count;i++)
+		{
+		
+		actual=Data.getItemsPrices().get(i);
+
+			Assert.assertTrue(actual >= max && actual <= min,
+			    "Expected value to be between " + max + " and " + min + ", but got: " + actual);
+
+		}
+	}
+	
+	
+
+		
+		
+	}
+	
+	@Test(enabled = false)//f
+	public void testFilters() throws InterruptedException
+	{	Thread.sleep(1000);
+		HomePage homePage = new HomePage(driver);
+		DetailsPage detailsPage=new DetailsPage(driver);
+		homePage.chooseFillters();
+		Thread.sleep(1000);
+		homePage.clickOnItems();
+
+		detailsPage.getCategory();
+		boolean found = false;
+
+		for (int i = 0; i < Data.getChoosenFilltersNames().size(); i++) {
+		    if (Data.getChoosenFilltersNames().get(i).toLowerCase().contains(Data.getCategory().toLowerCase())) {
+		        found = true;
+		        break;
+		    }
+		}
+System.out.print("List ="+Data.getChoosenFilltersNames()+"real="+Data.getCategory());
+		Assert.assertTrue(found, "Expected filter containing '" + Data.getCategory() + "' was not found in the list: " + Data.getChoosenFilltersNames());
+
+		
+	}
+	
+	@Test(enabled = false)
+	public void testBrand() throws InterruptedException
+	{
+		HomePage homePage=new HomePage(driver);
+		homePage.byBrand();
+		homePage.clickOnItems();
+		Thread.sleep(1000);
+		DetailsPage detailsPage=new DetailsPage(driver);
+		detailsPage.getBrand();
+		System.out.println("Expected="+Data.getChoosenBrand()+"Actual="+Data.getBrand());
+		Assert.assertTrue(Data.getChoosenBrand().contentEquals(Data.getBrand()),"Expected brand containing '" + Data.getChoosenBrand() + "' was not match: " + Data.getBrand());
+
+		
+	}
+	
+	@Test(enabled = false)//F
+	public void testLinks()
+	{
+		HomePage homePage=new HomePage(driver);
+		String[] keyStrings= {"GitHub"," Support","Privacy"," BarnImages"," Unsplash"};
+		homePage.hyperLinkes();
+		String res="";
+		boolean found = false;
+
+		for (int i = 0; i < keyStrings.length; i++) {
+		    if (Data.getLinks().toLowerCase().contains(keyStrings[i].toLowerCase())) {
+		        found = true;
+		        res=keyStrings[i];
+		        break;
+		    }
+		}
+		System.out.print("List ="+Data.getLinks()+"real="+res);
+		Assert.assertTrue(found, "Expected URL containing '" + Data.getLinks() + "' was not found in the list: " + res);
+
+
+		}
     
 }
 
